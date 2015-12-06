@@ -63,7 +63,7 @@ using namespace std;
 #define ROUTING_DLDR                 18
 #define ROUTING_DOWNWARD_CROSS_LAYER 19
 #define INVALID_ROUTING              -1
-
+#define ROUTING_ADAPTIVE3D			 99
 // Selection strategies
 #define SEL_RANDOM                   0
 #define SEL_BUFFER_LEVEL             1
