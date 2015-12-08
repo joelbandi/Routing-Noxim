@@ -14,6 +14,7 @@
 #include <cassert>
 #include <systemc.h>
 #include <vector>
+//noximmain.h//
 
 /* parameter definition of traffic-thermal co-sim */
 //#include "define.h"
