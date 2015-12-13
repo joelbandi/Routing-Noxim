@@ -330,7 +330,7 @@ void NoximRouter::bufferMonitor()
 	
 	NoximCoord position = id2Coord(local_id);
 
-	if((position.x == 0 && position.y == 0 && position.z == 0) || (position.x == 7 && position.y == 7 && position.z == 7) ||
+	if((position.x == 0 && position.y == 0 && position.z == 0)  || (position.x == 7 && position.y == 7 && position.z == 7) ||
 		(position.x == 7 && position.y == 0 && position.z == 0) ||
 		(position.x == 0 && position.y == 7 && position.z == 0) ||
 		(position.x == 0 && position.y == 0 && position.z == 7) ||
@@ -441,7 +441,14 @@ vector < int >NoximRouter::routingFunction(const NoximRouteData & route_data)
 	
 	case ROUTING_DLDR:
 		return routingDLDR( position, src_coord , dst_coord,routing, DW_layer);
-    default:
+	
+	//added stuff here (swag) .... a switch case entry to call set algorithm as the runtime param when noxim is invoked.
+	
+	
+	case ROUTING_ADAPTIVE3D:
+		return routingAdaptive3D (position, src_coord, dst_coord);
+    
+	default:
 	assert(false);
     }
 
@@ -1911,6 +1918,28 @@ vector<int> NoximRouter::routingTLAR_DW_IPD     (const NoximCoord& current, cons
 	}
 	return directions;
 }	
+
+
+//added stuff here (swag).... added definition for routing function of our algorithm.
+
+
+vector<int> NoximRouter::routingAdaptive3D      (const NoximCoord & current, const NoximCoord & source, const NoximCoord & destination) {
+	X_diff = current.x - destination.x;
+	Y_diff = current.y - destination.y;
+	Z_diff = current.z - destination.z;
+
+
+	int wts[] = { upport_wt, downport_wt, northport_wt, southport_wt, eastport_wt, westport_wt };
+	vector <int> weights;
+	int Traffic_condition[6] = 0;
+}
+
+
+
+
+
+
+
 
 void NoximRouter::configure(const int _id,
 			    const double _warm_up_time,

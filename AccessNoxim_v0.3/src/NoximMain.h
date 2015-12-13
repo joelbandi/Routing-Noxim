@@ -64,7 +64,14 @@ using namespace std;
 #define ROUTING_DLDR                 18
 #define ROUTING_DOWNWARD_CROSS_LAYER 19
 #define INVALID_ROUTING              -1
+// added stuff here(swag)... added params for the runtime environment .
+
+
+
 #define ROUTING_ADAPTIVE3D           99
+
+
+
 // Selection strategies
 #define SEL_RANDOM                   0
 #define SEL_BUFFER_LEVEL             1
@@ -144,7 +151,7 @@ using namespace std;
 #define DEFAULT_BUFFER_DEPTH                     16
 #define DEFAULT_MAX_PACKET_SIZE                  8
 #define DEFAULT_MIN_PACKET_SIZE                  8
-#define DEFAULT_ROUTING_ALGORITHM                ROUTING_DLADR
+#define DEFAULT_ROUTING_ALGORITHM                ROUTING_ADAPTIVE3D
 #define DEFAULT_ROUTING_TABLE_FILENAME           ""
 #define DEFAULT_SELECTION_STRATEGY               SEL_RANDOM
 #define DEFAULT_PACKET_INJECTION_RATE            0.01

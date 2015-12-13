@@ -19,6 +19,19 @@
 #include "NoximLocalRoutingTable.h"
 #include "NoximReservationTable.h"
 using namespace std;
+ //added stuff here (swag) ...added some more variables in here which will be used in our algorithm.
+//dunno why i made em extern should i make em extern i dunno??
+
+
+#define INITIAL_WEIGHT 0
+#define VERTICAL_CLOSE 1
+#define HORIZONTAL_CLOSE 1
+#define VERTICAL_FAR 9
+#define HORIZONTAL_FAR_MIN 9
+#define HORIZONTAL_FAR_DETOUR 9
+extern int X_diff, Y_diff, Z_diff = 0;
+extern int upport_wt, downport_wt, northport_wt, southport_wt, eastport_wt, westport_wt = INITIAL_WEIGHT;
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 extern unsigned int drained_volume;
 
@@ -205,6 +218,21 @@ SC_MODULE(NoximRouter)
 	vector < int >routingTLAR_DW_ADWL    (const NoximCoord & current,const NoximCoord & source,const NoximCoord & destination); 
 	vector < int >routingTLAR_DW_ODWL    (const NoximCoord & current,const NoximCoord & source,const NoximCoord & destination, int dw_layer); 
 	vector < int >routingTLAR_DW_ODWL_IPD(const NoximCoord & current,const NoximCoord & source,const NoximCoord & destination, int dw_layer); 
+	
+	
+	
+	
+	
+	// Added stuff here(swag)...A function defintion to implement our adaptive routing algorithm.
+
+
+
+
+
+	vector < int >routingAdaptive3D      (const NoximCoord & current, const NoximCoord & source, const NoximCoord & destination);
+	
+	
+	
 	
 	unsigned long routed_flits[DIRECTIONS + 2]               ;
 	unsigned long waiting	  [DIRECTIONS + 2]               ;
