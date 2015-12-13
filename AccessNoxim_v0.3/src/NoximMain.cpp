@@ -83,6 +83,10 @@ int sc_main(int arg_num, char *arg_vet[])
 
     parseCmdLine(arg_num, arg_vet);
 
+    // SETTING THIS FOR THE TDAR ROUTING ALGO
+    NoximGlobalParams::routing_algorithm = ROUTING_TDAR;
+    //
+
     // Signals
     sc_clock clock("clock", 1, SC_NS);
     sc_signal <bool> reset;
