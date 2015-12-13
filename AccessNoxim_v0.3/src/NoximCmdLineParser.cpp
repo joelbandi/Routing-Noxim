@@ -263,7 +263,14 @@ void parseCmdLine(int arg_num, char *arg_vet[])
 		NoximGlobalParams::max_packet_size = atoi(arg_vet[++i]);
 	    } else if (!strcmp(arg_vet[i], "-routing")) {
 		char *routing = arg_vet[++i];
-		if      (!strcmp(routing, "xyz"          ))
+		if           (!strcmp(routing, "tdar"		  ))
+		{
+			NoximGlobalParams::routing_algorithm = ROUTING_TDAR;
+			NoximGlobalParams::mesh_dim_x = 4;
+			NoximGlobalParams::mesh_dim_y = 4;
+			NoximGlobalParams::mesh_dim_z = 4;
+		}
+		else if      (!strcmp(routing, "xyz"          ))
 		    NoximGlobalParams::routing_algorithm = ROUTING_XYZ;
 		else if (!strcmp(routing, "zxy"          ))
 		    NoximGlobalParams::routing_algorithm = ROUTING_ZXY;
