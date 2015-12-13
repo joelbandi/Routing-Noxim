@@ -11,6 +11,12 @@
 #ifndef __NOXIMROUTER_H__
 #define __NOXIMROUTER_H__
 
+#define VERTICAL_FAR 5
+#define HORIZONTAL_FAR_MIN 4
+#define HORIZONTAL_FAR_DETOUR 4
+#define VERTICAL_CLOSE 5
+#define HORIZONTAL_CLOSE 4
+
 #include <systemc.h>
 #include "NoximMain.h"
 #include "NoximBuffer.h"

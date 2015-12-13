@@ -388,6 +388,9 @@ vector < int >NoximRouter::routingFunction(const NoximRouteData & route_data)
 	
     switch ( NoximGlobalParams::routing_algorithm ) {
 	/***ACCESS IC LAB's Routing Algorithm***/
+    case ROUTING_TDAR:
+    	return routingTDAR(position, src_coord, dst_coord);
+
 	case ROUTING_XYZ:
       return routingXYZ(position, dst_coord);
       
@@ -1018,6 +1021,122 @@ vector < int >NoximRouter::routingXYZ(const NoximCoord & current,const NoximCoor
     else if (destination.z < current.z)	directions.push_back(DIRECTION_UP   );
     return directions;
 }
+
+vector < int >NoximRouter::routingTDAR(const NoximCoord & current,const NoximCoord & source,const NoximCoord & destination){
+
+	vector < int > directions;
+
+	// Compute the difference between destination and current
+	int xdiff = current.x - destination.x;
+	int ydiff = current.y - destination.y;
+	int zdiff = current.z - destination.z;
+
+	// check to see if the difference coords are 0.
+	if (xdiff == 0 && ydiff == 0 && zdiff == 0) {
+		// if yes, deliver packet and return
+		directions.push_back(DIRECTION_LOCAL);
+		return directions;
+	}
+
+	// array to hold the weights for the ports in each direction
+	int port_weight[DIRECTIONS];
+
+	//assigning weights
+	if ((xdiff >= -1 && xdiff <= 1) && (ydiff >= -1 && ydiff <= 1) && (zdiff >= -1 && zdiff <= 1)){
+		
+		// this is when the destination is close to the source
+
+		// checking zdiff
+		if (zdiff > 0){
+			port_weight[DIRECTION_DOWN] = VERTICAL_CLOSE;
+		} else{
+			if (zdiff < 0)
+				port_weight[DIRECTION_UP] = VERTICAL_CLOSE;
+		}
+
+		// checking ydiff
+		if (ydiff > 0) {
+			port_weight[DIRECTION_SOUTH] = HORIZONTAL_CLOSE;
+		} else {
+			if (ydiff < 0)
+				port_weight[DIRECTION_NORTH] = HORIZONTAL_CLOSE;
+		}
+
+		// checking zdiff
+		if (xdiff > 0) {
+			port_weight[DIRECTION_DOWN] = HORIZONTAL_CLOSE;
+		} else {
+			if (xdiff < 0)
+				port_weight[DIRECTION_UP] = HORIZONTAL_CLOSE;
+		}
+
+	} else {
+
+		// this is when the destination is at least 3 hops away from the source
+
+		// checking zdiff
+		if (zdiff > 0){
+			port_weight[DIRECTION_DOWN] = VERTICAL_FAR;
+		} else{
+			if (zdiff < 0)
+				port_weight[DIRECTION_UP] = VERTICAL_FAR;
+		}
+
+		// checking ydiff
+		if (ydiff > 0) {
+			port_weight[DIRECTION_SOUTH] = HORIZONTAL_FAR_MIN;
+			port_weight[DIRECTION_NORTH] = HORIZONTAL_FAR_DETOUR;
+		} else {
+			if (ydiff < 0){
+				port_weight[DIRECTION_NORTH] = HORIZONTAL_FAR_MIN;
+				port_weight[DIRECTION_SOUTH] = HORIZONTAL_FAR_DETOUR;
+			}
+		}
+
+		// checking xdiff
+		if (xdiff > 0) {
+			port_weight[DIRECTION_EAST] = HORIZONTAL_FAR_MIN;
+			port_weight[DIRECTION_WEST] = HORIZONTAL_FAR_DETOUR;
+		} else {
+			if (xdiff < 0){
+				port_weight[DIRECTION_WEST] = HORIZONTAL_FAR_MIN;
+				port_weight[DIRECTION_EAST] = HORIZONTAL_FAR_DETOUR;
+			}
+		}
+
+	}
+
+	// obtaining the buffer space from neighbors and calculating traffic condition
+	int free_buffer_space[DIRECTIONS];
+	int traffic_condition[DIRECTIONS];
+	for (int i = 0; i<DIRECTIONS; i++){
+		free_buffer_space[i] = free_slots_neighbor[i]; // free_slot_neighbors holds the number of free slots in neighbor's buffers
+		traffic_condition[i] = free_buffer_space[i] * port_weight[i];
+	}
+
+	// find the direction that has the highest traffic condition
+	// keep track of the max found so far. If there is a conflicting item, choose the one with higher weight.
+	int right_dir = 0; // initializing
+	for (int i = 0; i<DIRECTIONS; i++){
+		if (traffic_condition[i] >= traffic_condition[right_dir]){
+			if (traffic_condition[i] == traffic_condition[right_dir]){
+				// if the max is not unique
+				if (port_weight[i] > port_weight[right_dir])
+					right_dir = i;
+				continue;
+			}
+			right_dir = i; // updating right_dir to hold the max found so far
+		}
+	}
+
+	// assigning the right direction
+	directions.push_back(right_dir);
+
+	return directions; // although this is a vector, we are just sending out one direction
+
+
+}
+
 vector<int> NoximRouter::routingZXY(const NoximCoord& current, const NoximCoord& destination){
   vector<int> directions;
        if (destination.z > current.z) directions.push_back(DIRECTION_DOWN );
