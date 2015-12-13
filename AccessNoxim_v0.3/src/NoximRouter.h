@@ -186,6 +186,7 @@ SC_MODULE(NoximRouter)
     int selectionRCA2D      (const vector <int> & directions, const NoximRouteData & route_data);
     int selectionThermal    (const vector <int> & directions, const NoximRouteData & route_data);	
 	// routing functions
+	vector < int >routingTDAR            (const NoximCoord & current,const NoximCoord & source,const NoximCoord & destination);
 	vector < int >routingXYZ             (const NoximCoord & current                          ,const NoximCoord & destination);
 	vector < int >routingZXY             (const NoximCoord & current                          ,const NoximCoord & destination);
 	vector < int >routingWestFirst       (const NoximCoord & current                          ,const NoximCoord & destination);
