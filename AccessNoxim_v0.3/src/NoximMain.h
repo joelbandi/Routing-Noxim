@@ -64,13 +64,10 @@ using namespace std;
 #define ROUTING_DLDR                 18
 #define ROUTING_DOWNWARD_CROSS_LAYER 19
 #define INVALID_ROUTING              -1
+
 // added stuff here(swag)... added params for the runtime environment .
-
-
-
 #define ROUTING_ADAPTIVE3D           99
-
-
+////////////////////////////////////////////////////////////////////////
 
 // Selection strategies
 #define SEL_RANDOM                   0

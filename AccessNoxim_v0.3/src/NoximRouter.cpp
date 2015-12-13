@@ -1958,7 +1958,6 @@ vector<int> NoximRouter::routingAdaptive3D(const NoximCoord & current, const Nox
 	Z_diff = current.z - destination.z;
 
 
-	int wts[] = { upport_wt, downport_wt, northport_wt, southport_wt, eastport_wt, westport_wt };
 	vector <int> directions;
 	int Traffic_condition[6];
 
@@ -1986,7 +1985,7 @@ vector<int> NoximRouter::routingAdaptive3D(const NoximCoord & current, const Nox
 		else if (Z_diff < 0) { upport_wt = VERTICAL_FAR; }
 	}
 
-
+	int wts[] = { upport_wt, downport_wt, northport_wt, southport_wt, eastport_wt, westport_wt };
 	if (X_diff == Y_diff == Z_diff == 0) {
 		directions.push_back(DIRECTION_LOCAL);
 		return directions;
