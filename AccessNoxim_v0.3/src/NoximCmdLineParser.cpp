@@ -265,6 +265,17 @@ void parseCmdLine(int arg_num, char *arg_vet[])
 		char *routing = arg_vet[++i];
 		if      (!strcmp(routing, "xyz"          ))
 		    NoximGlobalParams::routing_algorithm = ROUTING_XYZ;
+		
+		//added stuff here(swag).....added command line parsing functionality for this algorithm use options -routing a3d option
+		// should we make i as default routing?? swag..
+
+		
+		else if (!strcmp(routing, "a3d")) {
+			NoximGlobalParams::routing_algorithm = ROUTING_ADAPTIVE3D;
+			NoximGlobalParams::mesh_dim_x = 4;
+			NoximGlobalParams::mesh_dim_y = 4;
+			NoximGlobalParams::mesh_dim_z = 4;
+		}
 		else if (!strcmp(routing, "zxy"          ))
 		    NoximGlobalParams::routing_algorithm = ROUTING_ZXY;
 		else if (!strcmp(routing,"downward"      )){ 

@@ -151,7 +151,7 @@ using namespace std;
 #define DEFAULT_BUFFER_DEPTH                     16
 #define DEFAULT_MAX_PACKET_SIZE                  8
 #define DEFAULT_MIN_PACKET_SIZE                  8
-#define DEFAULT_ROUTING_ALGORITHM                ROUTING_ADAPTIVE3D
+#define DEFAULT_ROUTING_ALGORITHM                ROUTING_XYZ
 #define DEFAULT_ROUTING_TABLE_FILENAME           ""
 #define DEFAULT_SELECTION_STRATEGY               SEL_RANDOM
 #define DEFAULT_PACKET_INJECTION_RATE            0.01
